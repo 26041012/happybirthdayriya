@@ -30,6 +30,23 @@ body {
     position: relative;
 }
 
+/* Background Pattern */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/wp12562313-cat-doodle-wallpapers.jpg');
+    background-repeat: repeat;
+    background-size: 300px;
+    opacity: 0.4;
+    z-index: -1;
+    pointer-events: none;
+    filter: brightness(0.8) contrast(1.2);
+}
+
 /* Section Styles */
 .section {
     min-height: 100vh;
@@ -40,6 +57,8 @@ body {
     justify-content: center;
     position: relative;
     z-index: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
 }
 
 h1, h2 {
@@ -52,7 +71,7 @@ h1, h2 {
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+    background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(99, 179, 237, 0.9));
     text-align: center;
     padding: 1rem;
 }
@@ -173,6 +192,7 @@ h1, h2 {
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin: 0 auto;
 }
 
 .film-frame::before {
@@ -221,6 +241,44 @@ h1, h2 {
     color: var(--text-color);
     text-align: center;
     padding: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .film-frame {
+        flex: 0 0 95%;
+        width: 95%;
+        margin: 0 2.5%;
+    }
+    
+    .film-image {
+        height: 250px;
+    }
+    
+    .film-caption {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .film-frame {
+        flex: 0 0 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem;
+    }
+    
+    .film-image {
+        height: 200px;
+    }
+    
+    .film-caption {
+        font-size: 1rem;
+    }
+    
+    .gallery-container {
+        padding: 0;
+    }
 }
 
 /* Birthday Section */

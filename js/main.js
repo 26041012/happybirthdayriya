@@ -53,16 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
 function createFloatingHearts() {
     const heartsContainer = document.querySelector('.floating-hearts');
     const heartCount = 20;
+    const heartIcons = ['💖', '💝', '💗', '💓', '💕', '💘', '💞', '💟', '❣️', '❤️‍🔥'];
 
     for (let i = 0; i < heartCount; i++) {
         const heart = document.createElement('div');
-        heart.innerHTML = '❤️';
+        heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
         heart.style.position = 'absolute';
         heart.style.left = `${Math.random() * 100}%`;
         heart.style.top = `${Math.random() * 100}%`;
         heart.style.fontSize = `${Math.random() * 20 + 10}px`;
         heart.style.animation = `float ${Math.random() * 5 + 5}s ease-in-out infinite`;
         heart.style.animationDelay = `${Math.random() * 5}s`;
+        heart.style.filter = 'drop-shadow(0 0 5px rgba(255, 0, 0, 0.5))';
         heartsContainer.appendChild(heart);
     }
 }
