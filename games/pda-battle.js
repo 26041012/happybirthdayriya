@@ -37,8 +37,8 @@ let sidCanJump = true;
 let sidCanShoot = true;
 
 // Constants
-const JUMP_COOLDOWN = 1000; // 1 second
-const SHOOT_COOLDOWN = 800; // 0.8 seconds
+const JUMP_COOLDOWN = 900; // 0.9 seconds to match the new jump animation
+const SHOOT_COOLDOWN = 300; // 0.3 seconds for faster shooting
 const DAMAGE = 20;
 const BULLET_SPEED = 1000; // 1 second to cross screen
 
@@ -47,6 +47,19 @@ function initGame() {
     rotationPrompt.classList.remove('hidden');
     gameContainer.classList.add('hidden');
     updateHealthBars();
+    requestFullscreen();
+}
+
+// Request fullscreen
+function requestFullscreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
 }
 
 // Start game
@@ -59,6 +72,7 @@ function startGame() {
     updateHealthBars();
     startSidAI();
     backgroundMusic.play().catch(console.error);
+    requestFullscreen();
 }
 
 // Update health bars
@@ -77,6 +91,7 @@ function jump(character, isRiya = false) {
     
     if (isRiya) {
         canJump = false;
+        // Don't prevent shooting while jumping
         setTimeout(() => {
             canJump = true;
             character.classList.remove('jumping');
@@ -99,7 +114,19 @@ function shoot(isRiya = false) {
     
     const bullet = document.createElement('div');
     bullet.className = `bullet ${isRiya ? 'normal-bullet' : 'pda-bullet'}`;
-    bullet.style.bottom = '95px';
+    
+    // Get shooter and target characters
+    const shooter = isRiya ? riya : sid;
+    const target = isRiya ? sid : riya;
+    
+    // Store initial jumping states
+    const shooterWasJumping = shooter.classList.contains('jumping');
+    
+    // Adjust bullet position based on whether character is jumping
+    const isJumping = shooter.classList.contains('jumping');
+    const baseBottom = 95;
+    const jumpOffset = isJumping ? 100 : 0; // Add offset when jumping
+    bullet.style.bottom = `${baseBottom + jumpOffset}px`;
     
     // Create and set bullet image
     const bulletImg = document.createElement('img');
@@ -124,9 +151,15 @@ function shoot(isRiya = false) {
     
     // Remove bullet and check collision after animation
     setTimeout(() => {
-        const targetChar = isRiya ? sid : riya;
-        if (!targetChar.classList.contains('jumping')) {
-            // Hit!
+        const targetIsJumping = target.classList.contains('jumping');
+        
+        // Hit detection logic:
+        // If bullet was shot from ground and target is on ground -> HIT
+        // If bullet was shot while jumping and target is jumping -> HIT
+        // If bullet was shot from ground and target is jumping -> MISS
+        // If bullet was shot while jumping and target is on ground -> MISS
+        if (shooterWasJumping === targetIsJumping) {
+            // Both in air or both on ground = HIT
             if (isRiya) {
                 sidHealth -= DAMAGE;
             } else {
@@ -161,7 +194,7 @@ function checkGameOver() {
     if (sidHealth <= 0) {
         endGame("Congratulations! You convinced Sid to not hold hands in campus! 🎉", true);
     } else if (riyaHealth <= 0) {
-        endGame("Game Over! You have to hold hands the whole time while being in campus! 😅", false);
+        endGame("Game Over! You have to hold hands the whole time while being in campus! ��", false);
     }
 }
 
@@ -180,14 +213,38 @@ function endGame(message, isWin) {
     }
 }
 
-// Event listeners
-promptDoneBtn.addEventListener('click', startGame);
-jumpBtn.addEventListener('click', () => jump(riya, true));
-shootBtn.addEventListener('click', () => shoot(true));
+// Event listeners with improved responsiveness
+promptDoneBtn.addEventListener('click', () => {
+    startGame();
+    requestFullscreen();
+});
+
+// Using both touch and mouse events for better responsiveness
+['touchstart', 'mousedown'].forEach(eventType => {
+    jumpBtn.addEventListener(eventType, (e) => {
+        e.preventDefault();
+        if (e.type === 'touchstart' || (e.type === 'mousedown' && e.button === 0)) {
+            jump(riya, true);
+        }
+    }, { passive: false });
+
+    shootBtn.addEventListener(eventType, (e) => {
+        e.preventDefault();
+        if (e.type === 'touchstart' || (e.type === 'mousedown' && e.button === 0)) {
+            shoot(true);
+        }
+    }, { passive: false });
+});
+
 playAgainBtn.addEventListener('click', () => {
     gameOver.classList.add('hidden');
     startGame();
 });
 
 // Initialize game on load
-window.addEventListener('load', initGame); 
+window.addEventListener('load', initGame);
+
+// Handle orientation change
+window.addEventListener('orientationchange', () => {
+    setTimeout(requestFullscreen, 300);
+}); 
