@@ -5,9 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let backgroundMusic = null;
 
     function initMusic() {
-        backgroundMusic = new Audio('assets/audio/background-music.mp3');
+        backgroundMusic = new Audio('assets/audio/Rewrite the Stars.mp3');
         backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.5;
+        backgroundMusic.volume = 0.3;
         
         // Handle music loading errors
         backgroundMusic.onerror = function() {

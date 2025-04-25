@@ -9,71 +9,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Background Elements -->
-    <div class="floating-hearts"></div>
-    
-    <!-- Hero Section -->
-    <section id="hero" class="section">
-        <div class="hero-content">
-            <h1>To You, With Love ❤️</h1>
-            <p class="subtitle">A little something I made just for you...</p>
-            <button id="start-journey" class="cta-button">Start the Journey</button>
-        </div>
-        <div class="music-control">
-            <button id="music-toggle">
-                <i class="fas fa-music"></i>
-            </button>
-        </div>
-    </section>
-
-    <!-- Timeline Section -->
-    <section id="timeline" class="section">
-        <h2>Our Journey</h2>
-        <div class="gallery-container">
-            <div class="film-roll">
-                <!-- Film frames will be added dynamically via JavaScript -->
+    <div class="background-wrapper"></div>
+    <div class="main-content">
+        <!-- Background Elements -->
+        <div class="floating-hearts"></div>
+        
+        <!-- Hero Section -->
+        <section id="hero" class="section">
+            <div class="hero-content">
+                <h1>To You, With Love ❤️</h1>
+                <p class="subtitle">A little something I made just for you...</p>
+                <button id="start-journey" class="cta-button">Start the Journey</button>
             </div>
-        </div>
-    </section>
-
-    <!-- Reasons Section -->
-    <section id="reasons" class="section">
-        <h2>Reasons Why I Love You</h2>
-        <div class="reasons-container">
-            <button id="heart-button" class="heart-button">
-                <i class="fas fa-heart"></i>
-            </button>
-            <div id="reason-display" class="reason-display"></div>
-        </div>
-    </section>
-
-    <!-- Film Roll Gallery Section -->
-    <section id="gallery" class="section">
-        <h2>Our Memories</h2>
-        <div class="gallery-container">
-            <div class="film-roll">
-                <!-- Film frames will be added dynamically via JavaScript -->
+            <div class="music-control">
+                <button id="music-toggle">
+                    <i class="fas fa-music"></i>
+                </button>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Birthday Section -->
-    <section id="birthday" class="section">
-        <h2>Happy Birthday, Love! 🎉</h2>
-        <div class="birthday-content">
-            <button id="confetti-button" class="cta-button">Celebrate!</button>
-            <div id="countdown" class="countdown"></div>
-            <div id="birthday-card" class="birthday-card">
-                <!-- Birthday message will be added here -->
+        <!-- Timeline Section -->
+        <section id="timeline" class="section">
+            <h2>Our Journey</h2>
+            <div class="gallery-container">
+                <div class="film-roll">
+                    <!-- Film frames will be added dynamically via JavaScript -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Reasons Section -->
+        <section id="reasons" class="section">
+            <h2>Reasons Why I Love You</h2>
+            <div class="reasons-container">
+                <button id="heart-button" class="heart-button">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <div id="reason-display" class="reason-display"></div>
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="section">
+            <h2>Have a game for youuu</h2>
+            <div class="games-container">
+                <a href="games/pda-battle.html" class="game-card">
+                    <div class="game-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>PDA Battle</h3>
+                    <p>Help Riya convince Sid to not hold hands in campus 😋🤝</p>
+                </a>
+            </div>
+        </section>
+    </div>
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/reasons.js"></script>
     <script src="js/gallery.js"></script>
-    <script src="js/birthday.js"></script>
 </body>
 </html> 

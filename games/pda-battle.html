@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDA Battle</title>
+    <link rel="stylesheet" href="pda-battle.css">
+</head>
+<body>
+    <!-- Rotation prompt -->
+    <div id="rotation-prompt" class="rotation-prompt">
+        <div class="prompt-content">
+            <p>Please rotate your phone to landscape mode</p>
+            <button id="prompt-done">Done</button>
+        </div>
+    </div>
+
+    <!-- Game container -->
+    <div id="game-container" class="game-container">
+        <!-- Health bars -->
+        <div class="health-bars">
+            <div class="health-bar sid-health">
+                <div class="health-label">Sid</div>
+                <div class="health-fill"></div>
+            </div>
+            <div class="health-bar riya-health">
+                <div class="health-label">Riya</div>
+                <div class="health-fill"></div>
+            </div>
+        </div>
+
+        <!-- Game characters -->
+        <div id="sid" class="character sid">
+            <img src="../assets/game/sid.png" alt="Sid">
+        </div>
+        <div id="riya" class="character riya">
+            <img src="../assets/game/riya.png" alt="Riya">
+        </div>
+
+        <!-- Game controls -->
+        <div class="controls">
+            <button id="jump-btn" class="game-btn">Jump</button>
+            <button id="shoot-btn" class="game-btn">Shoot</button>
+        </div>
+
+        <!-- Game over screen -->
+        <div id="game-over" class="game-over hidden">
+            <div class="game-over-content">
+                <h2 id="result-text"></h2>
+                <button id="play-again">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="pda-battle.js"></script>
+</body>
+</html> 
