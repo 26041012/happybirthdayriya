@@ -162,107 +162,114 @@ h1, h2 {
 
 /* Film Roll Gallery */
 .gallery-container {
-    max-width: 100%;
-    margin: 1rem auto;
-    padding: 0;
+    width: 100%;
     position: relative;
-    overflow: hidden;
-    height: auto;
-    min-height: 60vh;
-    max-height: 80vh;
+    margin: 0 auto;
+    padding: 10px 0;
 }
 
 .film-roll {
+    width: 100%;
     display: flex;
-    gap: 0;
-    padding: 0;
-    overflow-x: auto;
     scroll-snap-type: x mandatory;
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    height: 100%;
+}
+
+.film-roll::-webkit-scrollbar {
+    display: none;
 }
 
 .film-frame {
+    width: 100%;
     flex: 0 0 100%;
     scroll-snap-align: center;
-    background: white;
-    border-radius: 10px;
-    padding: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    margin: 0;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    aspect-ratio: 3/4;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .film-image {
     width: 100%;
-    height: 100%;
+    max-height: 70vh;
     object-fit: contain;
     border-radius: 8px;
-    margin: 0;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .film-caption {
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    color: var(--text-color);
+    margin-top: 8px;
     text-align: center;
-    padding: 0.5rem;
+    font-family: var(--font-primary);
+    font-size: 14px;
+    color: var(--text-color);
+    padding: 5px;
     background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+}
+
+/* Navigation dots */
+.gallery-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.nav-dot.active {
+    background: var(--primary-color);
+}
+
+/* Swipe indicator */
+.swipe-indicator {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    backdrop-filter: blur(5px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    animation: fadeInOut 2s ease-in-out;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .section {
-        min-height: 100vh;
-        padding: 0.5rem;
-    }
-    
-    .gallery-container {
-        margin: 0.5rem auto;
-        min-height: 50vh;
-        max-height: 70vh;
-    }
-    
-    .film-frame {
-        padding: 0.25rem;
-    }
-    
-    .film-caption {
-        font-size: 0.9rem;
-        padding: 0.25rem;
-    }
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
 }
 
-@media (max-width: 480px) {
-    .section {
-        min-height: 100vh;
-        padding: 0.25rem;
-    }
-    
+/* Desktop styles */
+@media (min-width: 768px) {
     .gallery-container {
-        margin: 0;
-        min-height: 40vh;
-        max-height: 60vh;
+        max-width: 90%;
+        padding: 20px 0;
     }
-    
+
     .film-frame {
-        padding: 0.15rem;
+        padding: 15px;
     }
-    
+
     .film-caption {
-        font-size: 0.85rem;
-        padding: 0.15rem;
+        font-size: 16px;
+        margin-top: 12px;
+    }
+
+    .nav-dot {
+        width: 10px;
+        height: 10px;
     }
 }
 

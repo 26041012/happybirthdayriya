@@ -1,6 +1,7 @@
 // Gallery functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const galleryContainer = document.querySelector('.film-roll');
+    const galleryContainer = document.querySelector('.gallery-container');
+    const filmRoll = document.querySelector('.film-roll');
     
     // Gallery data with actual images and captions
     const galleryData = [
@@ -102,15 +103,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
-    // Create film frames
+    // Create gallery content
     galleryData.forEach((item, index) => {
         const filmFrame = document.createElement('div');
         filmFrame.className = 'film-frame';
         
         const image = document.createElement('img');
+        image.className = 'film-image';
         image.src = item.image;
         image.alt = item.caption;
-        image.loading = 'lazy'; // Add lazy loading for better performance
+        image.loading = 'lazy';
         
         const caption = document.createElement('div');
         caption.className = 'film-caption';
@@ -118,56 +120,74 @@ document.addEventListener('DOMContentLoaded', () => {
         
         filmFrame.appendChild(image);
         filmFrame.appendChild(caption);
-        galleryContainer.appendChild(filmFrame);
+        filmRoll.appendChild(filmFrame);
     });
 
-    // Add scroll indicators
-    const scrollLeft = document.createElement('button');
-    scrollLeft.className = 'scroll-indicator left';
-    scrollLeft.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    // Add navigation dots
+    const nav = document.createElement('div');
+    nav.className = 'gallery-nav';
     
-    const scrollRight = document.createElement('button');
-    scrollRight.className = 'scroll-indicator right';
-    scrollRight.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    galleryData.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot';
+        if (index === 0) dot.classList.add('active');
+        nav.appendChild(dot);
+    });
     
-    galleryContainer.parentElement.insertBefore(scrollLeft, galleryContainer);
-    galleryContainer.parentElement.appendChild(scrollRight);
+    galleryContainer.appendChild(nav);
 
-    // Add scroll functionality
-    scrollLeft.addEventListener('click', () => {
-        galleryContainer.scrollBy({
-            left: -300,
-            behavior: 'smooth'
-        });
+    // Show swipe indicator on first load
+    const swipeIndicator = document.createElement('div');
+    swipeIndicator.className = 'swipe-indicator';
+    swipeIndicator.textContent = 'Swipe to view more →';
+    galleryContainer.appendChild(swipeIndicator);
+
+    // Update active dot on scroll
+    let timeout;
+    filmRoll.addEventListener('scroll', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            const index = Math.round(filmRoll.scrollLeft / filmRoll.offsetWidth);
+            document.querySelectorAll('.nav-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }, 150);
     });
 
-    scrollRight.addEventListener('click', () => {
-        galleryContainer.scrollBy({
-            left: 300,
-            behavior: 'smooth'
-        });
-    });
-
-    // Add touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    galleryContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    galleryContainer.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const swipeDistance = touchEndX - touchStartX;
-        if (Math.abs(swipeDistance) > 50) { // Minimum swipe distance
-            galleryContainer.scrollBy({
-                left: swipeDistance > 0 ? -300 : 300,
+    // Handle dot clicks
+    const dots = nav.querySelectorAll('.nav-dot');
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            filmRoll.scrollTo({
+                left: index * filmRoll.offsetWidth,
                 behavior: 'smooth'
             });
-        }
-    }
+        });
+    });
+
+    // Touch handling
+    let startX;
+    let scrollLeft;
+
+    filmRoll.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - filmRoll.offsetLeft;
+        scrollLeft = filmRoll.scrollLeft;
+    });
+
+    filmRoll.addEventListener('touchmove', (e) => {
+        if (!startX) return;
+        const x = e.touches[0].pageX - filmRoll.offsetLeft;
+        const walk = (x - startX) * 2;
+        filmRoll.scrollLeft = scrollLeft - walk;
+    });
+
+    filmRoll.addEventListener('touchend', () => {
+        startX = null;
+        // Snap to nearest frame
+        const index = Math.round(filmRoll.scrollLeft / filmRoll.offsetWidth);
+        filmRoll.scrollTo({
+            left: index * filmRoll.offsetWidth,
+            behavior: 'smooth'
+        });
+    });
 }); 
