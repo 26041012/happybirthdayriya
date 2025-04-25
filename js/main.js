@@ -39,9 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start journey button
     const startButton = document.getElementById('start-journey');
     startButton.addEventListener('click', () => {
-        document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('timeline').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
     });
 
+    // Initialize floating hearts
     createFloatingHearts();
     
     // Auto-play music (optional)
@@ -52,10 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // Create Floating Hearts
 function createFloatingHearts() {
     const heartsContainer = document.querySelector('.floating-hearts');
-    const heartCount = 20;
     const heartIcons = ['💖', '💝', '💗', '💓', '💕', '💘', '💞', '💟', '❣️', '❤️‍🔥'];
+    let heartCount = 0;
 
-    for (let i = 0; i < heartCount; i++) {
+    function addHeart() {
         const heart = document.createElement('div');
         heart.innerHTML = heartIcons[Math.floor(Math.random() * heartIcons.length)];
         heart.style.position = 'absolute';
@@ -66,6 +70,22 @@ function createFloatingHearts() {
         heart.style.animationDelay = `${Math.random() * 5}s`;
         heart.style.filter = 'drop-shadow(0 0 5px rgba(255, 0, 0, 0.5))';
         heartsContainer.appendChild(heart);
+        heartCount++;
+    }
+
+    // Add initial hearts
+    for (let i = 0; i < 10; i++) {
+        addHeart();
+    }
+
+    // Add more hearts when clicking the heart button
+    const heartButton = document.getElementById('heart-button');
+    if (heartButton) {
+        heartButton.addEventListener('click', () => {
+            for (let i = 0; i < 5; i++) {
+                addHeart();
+            }
+        });
     }
 }
 

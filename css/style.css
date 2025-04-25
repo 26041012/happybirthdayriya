@@ -50,11 +50,11 @@ body::before {
 /* Section Styles */
 .section {
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     position: relative;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.8);
@@ -163,121 +163,86 @@ h1, h2 {
 /* Film Roll Gallery */
 .gallery-container {
     max-width: 100%;
-    margin: 2rem auto;
+    margin: 1rem auto;
     padding: 0 1rem;
     position: relative;
     overflow: hidden;
+    height: calc(100vh - 200px);
 }
 
 .film-roll {
     display: flex;
     gap: 1rem;
-    padding: 2rem 0;
+    padding: 1rem 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-}
-
-.film-roll::-webkit-scrollbar {
-    display: none;
+    height: 100%;
 }
 
 .film-frame {
-    flex: 0 0 85%;
+    flex: 0 0 100%;
     scroll-snap-align: center;
     background: white;
     border-radius: 10px;
-    padding: 1rem;
+    padding: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     margin: 0 auto;
-}
-
-.film-frame::before {
-    content: "";
-    position: absolute;
-    top: -15px;
-    left: 0;
-    right: 0;
-    height: 15px;
-    background: repeating-linear-gradient(
-        90deg,
-        #000 0px,
-        #000 10px,
-        transparent 10px,
-        transparent 20px
-    );
-}
-
-.film-frame::after {
-    content: "";
-    position: absolute;
-    bottom: -15px;
-    left: 0;
-    right: 0;
-    height: 15px;
-    background: repeating-linear-gradient(
-        90deg,
-        #000 0px,
-        #000 10px,
-        transparent 10px,
-        transparent 20px
-    );
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .film-image {
     width: 100%;
-    height: 300px;
-    object-fit: cover;
+    height: calc(100% - 60px);
+    object-fit: contain;
     border-radius: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .film-caption {
     font-family: var(--font-primary);
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: var(--text-color);
     text-align: center;
     padding: 0.5rem;
+    height: 40px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .film-frame {
-        flex: 0 0 95%;
-        width: 95%;
-        margin: 0 2.5%;
+    .section {
+        min-height: 100vh;
+        padding: 0.5rem;
     }
     
-    .film-image {
-        height: 250px;
-    }
-    
-    .film-caption {
-        font-size: 1.1rem;
+    .gallery-container {
+        height: calc(100vh - 150px);
     }
 }
 
 @media (max-width: 480px) {
-    .film-frame {
-        flex: 0 0 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0.5rem;
-    }
-    
-    .film-image {
-        height: 200px;
-    }
-    
-    .film-caption {
-        font-size: 1rem;
+    .section {
+        min-height: 100vh;
+        padding: 0.25rem;
     }
     
     .gallery-container {
+        height: calc(100vh - 120px);
         padding: 0;
+    }
+    
+    .film-frame {
+        padding: 0.25rem;
+    }
+    
+    .film-caption {
+        font-size: 0.9rem;
+        height: 30px;
     }
 }
 
