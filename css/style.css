@@ -164,16 +164,18 @@ h1, h2 {
 .gallery-container {
     max-width: 100%;
     margin: 1rem auto;
-    padding: 0 1rem;
+    padding: 0;
     position: relative;
     overflow: hidden;
-    height: calc(100vh - 200px);
+    height: auto;
+    min-height: 60vh;
+    max-height: 80vh;
 }
 
 .film-roll {
     display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
+    gap: 0;
+    padding: 0;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -190,18 +192,19 @@ h1, h2 {
     padding: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: relative;
-    margin: 0 auto;
-    height: 100%;
+    margin: 0;
+    height: auto;
     display: flex;
     flex-direction: column;
+    aspect-ratio: 3/4;
 }
 
 .film-image {
     width: 100%;
-    height: calc(100% - 60px);
+    height: 100%;
     object-fit: contain;
     border-radius: 8px;
-    margin-bottom: 0.5rem;
+    margin: 0;
 }
 
 .film-caption {
@@ -210,7 +213,12 @@ h1, h2 {
     color: var(--text-color);
     text-align: center;
     padding: 0.5rem;
-    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(5px);
 }
 
 /* Responsive adjustments */
@@ -221,7 +229,18 @@ h1, h2 {
     }
     
     .gallery-container {
-        height: calc(100vh - 150px);
+        margin: 0.5rem auto;
+        min-height: 50vh;
+        max-height: 70vh;
+    }
+    
+    .film-frame {
+        padding: 0.25rem;
+    }
+    
+    .film-caption {
+        font-size: 0.9rem;
+        padding: 0.25rem;
     }
 }
 
@@ -232,17 +251,18 @@ h1, h2 {
     }
     
     .gallery-container {
-        height: calc(100vh - 120px);
-        padding: 0;
+        margin: 0;
+        min-height: 40vh;
+        max-height: 60vh;
     }
     
     .film-frame {
-        padding: 0.25rem;
+        padding: 0.15rem;
     }
     
     .film-caption {
-        font-size: 0.9rem;
-        height: 30px;
+        font-size: 0.85rem;
+        padding: 0.15rem;
     }
 }
 
