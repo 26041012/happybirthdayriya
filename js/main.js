@@ -1,40 +1,43 @@
 // Main functionality
 document.addEventListener('DOMContentLoaded', () => {
     // Background music
-    const musicToggle = document.getElementById('music-toggle');
-    let backgroundMusic = null;
+    const bgMusic = new Audio('assets/audio/background-music.mp3');
+    bgMusic.loop = true;
+    bgMusic.volume = 0.4;
 
+    // Initialize music on page load
     function initMusic() {
-        backgroundMusic = new Audio('assets/audio/Rewrite the Stars.mp3');
-        backgroundMusic.loop = true;
-        backgroundMusic.volume = 0.3;
+        const musicToggle = document.querySelector('.music-toggle');
         
-        // Handle music loading errors
-        backgroundMusic.onerror = function() {
-            console.log('Background music could not be loaded');
-            musicToggle.style.display = 'none';
-        };
+        // Try to play music automatically
+        const playPromise = bgMusic.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Playback started successfully
+                musicToggle.classList.add('playing');
+            }).catch(error => {
+                // Auto-play was prevented
+                console.log("Auto-play prevented:", error);
+                musicToggle.classList.remove('playing');
+            });
+        }
+
+        // Toggle music on button click
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play()
+                    .then(() => musicToggle.classList.add('playing'))
+                    .catch(console.error);
+            } else {
+                bgMusic.pause();
+                musicToggle.classList.remove('playing');
+            }
+        });
     }
 
-    musicToggle.addEventListener('click', () => {
-        if (!backgroundMusic) {
-            initMusic();
-        }
-        
-        if (backgroundMusic.paused) {
-            backgroundMusic.play()
-                .then(() => {
-                    musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
-                })
-                .catch(error => {
-                    console.log('Error playing music:', error);
-                    musicToggle.style.display = 'none';
-                });
-        } else {
-            backgroundMusic.pause();
-            musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
-        }
-    });
+    // Initialize music when document is ready
+    initMusic();
 
     // Start journey button
     const startButton = document.getElementById('start-journey');
@@ -76,16 +79,6 @@ function createFloatingHearts() {
     // Add initial hearts
     for (let i = 0; i < 10; i++) {
         addHeart();
-    }
-
-    // Add more hearts when clicking the heart button
-    const heartButton = document.getElementById('heart-button');
-    if (heartButton) {
-        heartButton.addEventListener('click', () => {
-            for (let i = 0; i < 5; i++) {
-                addHeart();
-            }
-        });
     }
 }
 

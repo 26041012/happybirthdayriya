@@ -29,18 +29,23 @@ loseSound.volume = 0.5;
 
 // Game state
 let gameActive = false;
+let isPaused = false;
 let sidHealth = 100;
 let riyaHealth = 100;
 let canJump = true;
 let canShoot = true;
 let sidCanJump = true;
 let sidCanShoot = true;
+let sidAIInterval;
+let riyaPattern = [];
+let sidStrategy = 'balanced'; // balanced, defensive, aggressive
 
 // Constants
 const JUMP_COOLDOWN = 900; // 0.9 seconds to match the new jump animation
 const SHOOT_COOLDOWN = 300; // 0.3 seconds for faster shooting
-const DAMAGE = 20;
+const DAMAGE = 10; // Reduced from 20 to 10
 const BULLET_SPEED = 1000; // 1 second to cross screen
+const SID_AI_INTERVAL = 1000; // Reduced from 1500 to 1000 for more responsive AI
 
 // Initialize game
 function initGame() {
@@ -90,6 +95,7 @@ function jump(character, isRiya = false) {
     jumpSound.play().catch(console.error);
     
     if (isRiya) {
+        riyaPattern.push('jump');
         canJump = false;
         // Don't prevent shooting while jumping
         setTimeout(() => {
@@ -111,6 +117,10 @@ function shoot(isRiya = false) {
     
     shootSound.currentTime = 0;
     shootSound.play().catch(console.error);
+    
+    if (isRiya) {
+        riyaPattern.push('shoot');
+    }
     
     const bullet = document.createElement('div');
     bullet.className = `bullet ${isRiya ? 'normal-bullet' : 'pda-bullet'}`;
@@ -172,21 +182,81 @@ function shoot(isRiya = false) {
     }, BULLET_SPEED);
 }
 
-// Sid AI
+// Sid AI with improved intelligence
 function startSidAI() {
     if (!gameActive) return;
     
-    // Random actions for Sid
-    setInterval(() => {
-        if (!gameActive) return;
+    sidAIInterval = setInterval(() => {
+        if (!gameActive || isPaused) return;
         
-        const action = Math.random();
-        if (action < 0.3) {
-            jump(sid);
-        } else if (action < 0.6) {
-            shoot(false);
+        // Analyze Riya's pattern
+        if (riyaPattern.length > 3) {
+            riyaPattern.shift();
         }
-    }, 1500);
+        
+        // Determine strategy based on health
+        if (sidHealth < 30) {
+            sidStrategy = 'defensive';
+        } else if (riyaHealth < 30) {
+            sidStrategy = 'aggressive';
+        } else {
+            sidStrategy = 'balanced';
+        }
+        
+        // Make decision based on strategy and pattern
+        const action = Math.random();
+        let shouldJump = false;
+        let shouldShoot = false;
+        
+        switch (sidStrategy) {
+            case 'defensive':
+                // More likely to jump when low health
+                shouldJump = action < 0.6;
+                shouldShoot = action < 0.3;
+                break;
+            case 'aggressive':
+                // More likely to shoot when Riya is low health
+                shouldJump = action < 0.3;
+                shouldShoot = action < 0.7;
+                break;
+            case 'balanced':
+                // Balanced approach
+                shouldJump = action < 0.4;
+                shouldShoot = action < 0.5;
+                break;
+        }
+        
+        // React to Riya's recent actions
+        if (riyaPattern.includes('jump') && !sidCanJump) {
+            shouldShoot = true;
+        }
+        if (riyaPattern.includes('shoot') && sidCanJump) {
+            shouldJump = true;
+        }
+        
+        // Execute actions
+        if (shouldJump && sidCanJump) {
+            jump(sid);
+            riyaPattern.push('jump');
+        } else if (shouldShoot && sidCanShoot) {
+            shoot(false);
+            riyaPattern.push('shoot');
+        }
+    }, SID_AI_INTERVAL);
+}
+
+// Pause game
+function togglePause() {
+    isPaused = !isPaused;
+    if (isPaused) {
+        backgroundMusic.pause();
+        clearInterval(sidAIInterval);
+        document.getElementById('pause-btn').textContent = 'Resume';
+    } else {
+        backgroundMusic.play().catch(console.error);
+        startSidAI();
+        document.getElementById('pause-btn').textContent = 'Pause';
+    }
 }
 
 // Check game over
@@ -240,6 +310,9 @@ playAgainBtn.addEventListener('click', () => {
     gameOver.classList.add('hidden');
     startGame();
 });
+
+// Add pause button event listener
+document.getElementById('pause-btn').addEventListener('click', togglePause);
 
 // Initialize game on load
 window.addEventListener('load', initGame);

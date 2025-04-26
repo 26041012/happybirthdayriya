@@ -1,7 +1,7 @@
 // Reasons Data
 const reasons = [
     "YOU",
-    "that you is riya",
+    "that YOU is Riya",
     "youre fucking pretty",
     "you smell soo gooodd",
     "your voice aaaajfiojjf",
@@ -17,7 +17,16 @@ const reasons = [
     "you always take my stand in front of others",
     "make me feel that somebody has my back",
     "you are smart (me dumb)",
-    "pahadi aakho vali ho"
+    "pahadi aakho vali ho",
+    "you never leave me when you know I'm hurting",
+    "you push yourself from your comfort zone for me",
+    "you are kind (haa tu hai)",
+    "your bitching is cute too",
+    "your sleepy face (chef kiss)",
+    "the way you will keep yourself up all night taki jo kaam shuru kiya hai vo khtm krdu :)",
+    "every actions that you do make me want to aggressively pamper you",
+    "i love you for who you are",
+    "you made the checklist and you ticked all of them"
 ];
 
 let currentReasonIndex = 0;
@@ -97,13 +106,19 @@ heartButton.addEventListener('click', () => {
     heartCount++;
     displayNewReason(); // Display new reason on each click
     
-    // Create multiple hearts
-    for (let i = 0; i < 5; i++) {
-        createHeart();
+    // Create multiple hearts with aggressive scaling
+    const baseHearts = 15; // Higher minimum hearts per click
+    const additionalHearts = Math.min(heartCount * 5, 35); // Much more aggressive scaling, higher max
+    const totalHearts = baseHearts + additionalHearts;
+    
+    for (let i = 0; i < totalHearts; i++) {
+        setTimeout(() => {
+            createHeart();
+        }, i * 30); // Faster creation for more intense effect
     }
 
     // If too many hearts, show message
-    if (hearts.length > 100) {
+    if (hearts.length > 200) { // Higher threshold
         showMessage();
         // Clear some hearts
         hearts.forEach(heart => {
@@ -112,6 +127,7 @@ heartButton.addEventListener('click', () => {
             }
         });
         hearts = [];
+        heartCount = 0; // Reset heart count
     }
 });
 
@@ -127,11 +143,15 @@ style.textContent = `
 
     @keyframes floatUp {
         0% {
-            transform: translateY(100vh) rotate(0deg);
+            transform: translateY(100vh) rotate(0deg) scale(1);
             opacity: 1;
         }
+        50% {
+            transform: translateY(-50vh) rotate(180deg) scale(1.2);
+            opacity: 0.8;
+        }
         100% {
-            transform: translateY(-100vh) rotate(360deg);
+            transform: translateY(-100vh) rotate(360deg) scale(1);
             opacity: 0;
         }
     }

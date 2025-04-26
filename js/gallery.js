@@ -7,131 +7,127 @@ document.addEventListener('DOMContentLoaded', () => {
     const galleryData = [
         {
             image: "assets/gallery/IMG-20250426-WA0011.jpg",
-            caption: "To..."
+            caption: "YOU"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0010.jpg",
-            caption: "the bestest..."
+            caption: "that YOU is Riya"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0009.jpg",
-            caption: "person of my life..."
+            caption: "youre fucking pretty"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0008.jpg",
-            caption: "Thank you so much..."
+            caption: "you smell soo gooodd"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0007.jpg",
-            caption: "for staying with me."
+            caption: "your voice aaaajfiojjf"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0006.jpg",
-            caption: "Even though..."
+            caption: "your maturity"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0005.jpg",
-            caption: "I am really possessive..."
+            caption: "you are dependable"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0004.jpg",
-            caption: "and insecure..."
+            caption: "you are cutee af"
         },
         {
             image: "assets/gallery/IMG-20250426-WA0003.jpg",
-            caption: "Well why wouldn't I be?"
+            caption: '"aree yaar pareshan mt kro" sounds cute'
         },
         {
             image: "assets/gallery/IMG-20250425-WA0026.jpg",
-            caption: "I pulled someone..."
+            caption: "you are a good listener"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0025.jpg",
-            caption: "who's out of my league."
+            caption: "i feel safe around you"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0024.jpg",
-            caption: "Can't let anyone..."
+            caption: "you dont judge (questionable)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0023.jpg",
-            caption: "try on you."
+            caption: "your smile is the best in business"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0022.jpg",
-            caption: "Your smile..."
+            caption: "good kisser (hehe)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0021.jpg",
-            caption: "your nature..."
+            caption: "you always take my stand in front of others"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0019.jpg",
-            caption: "I love everything..."
+            caption: "make me feel that somebody has my back"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0018.jpg",
-            caption: "about you."
+            caption: "you are smart (me dumb)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0017.jpg",
-            caption: "The memories..."
+            caption: "pahadi aakho vali ho"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0016.jpg",
-            caption: "that we make..."
+            caption: "you never leave me when you know I'm hurting"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0015.jpg",
-            caption: "are my core memories..."
+            caption: "you push yourself from your comfort zone for me"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0014.jpg",
-            caption: "for the rest of my life."
+            caption: "you are kind (haa tu hai)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0013.jpg",
-            caption: "Thank you for taking..."
+            caption: "your bitching is cute too"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0012.jpg",
-            caption: "that sweet 1 year..."
+            caption: "your sleepy face (chef kiss)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0009.jpg",
-            caption: "for saying yes..."
+            caption: "the way you will keep yourself up all night taki jo kaam shuru kiya hai vo khtm krdu :)"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0008.jpg",
-            caption: "Thank you for saying..."
+            caption: "every actions that you do make me want to aggressively pamper you"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0007.jpg",
-            caption: '"Btao kya hua..."'
-        },
-        {
-            image: "assets/gallery/IMG-20250425-WA0006.jpg",
-            caption: '"me sunn rhi hu"'
+            caption: "i love you for who you are"
         },
         {
             image: "assets/gallery/IMG-20250425-WA0005.jpg",
-            caption: "Thank you for..."
+            caption: "you made the checklist and you ticked all of them"
         },
         {
             image: "assets/gallery/IMG-20250413-WA0061.jpg",
-            caption: "holding my hand."
+            caption: "The memories we make..."
         },
         {
             image: "assets/gallery/IMG-20250413-WA0024.jpg",
-            caption: "whenever I looked tired."
+            caption: "are my core memories..."
         },
         {
             image: "assets/gallery/Screenshot 2024-05-02 085244.png",
-            caption: "You are literally..."
+            caption: "for the rest of my life"
         },
         {
             image: "assets/gallery/Screenshot 2024-09-25 014309.png",
-            caption: "the bestest human being alive."
+            caption: "Thank you for being in my life"
         },
         {
             image: "assets/gallery/Screenshot 2024-08-13 005728.png",
@@ -139,7 +135,11 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             image: "assets/gallery/Screenshot 2024-08-06 211312.png",
-            caption: "knowing that you are the one I am together with ❤️"
+            caption: "knowing that you are the one I am together with"
+        },
+        {
+            image: "assets/gallery/IMG-20250425-WA0006.jpg",
+            caption: "You are the bestest thing that has ever happened to me ❤️"
         }
     ];
 
@@ -193,13 +193,33 @@ document.addEventListener('DOMContentLoaded', () => {
     progressContainer.appendChild(progressBar);
     galleryContainer.appendChild(progressContainer);
 
-    // Smooth scrolling function
+    // Smooth scrolling function with easing
     function scrollToImage(index) {
         const targetScroll = index * filmRoll.offsetWidth;
-        filmRoll.scrollTo({
-            left: targetScroll,
-            behavior: 'smooth'
-        });
+        const startScroll = filmRoll.scrollLeft;
+        const distance = targetScroll - startScroll;
+        const duration = 800; // Increased duration for smoother animation
+        let startTime = null;
+
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const timeElapsed = currentTime - startTime;
+            const progress = Math.min(timeElapsed / duration, 1);
+            
+            // Easing function for smoother animation
+            const easeInOutCubic = progress => progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            
+            const run = easeInOutCubic(progress);
+            filmRoll.scrollLeft = startScroll + (distance * run);
+
+            if (progress < 1) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        requestAnimationFrame(animation);
     }
 
     // Update progress and dots
@@ -214,43 +234,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add touch swipe support
+    // Add touch swipe support with smooth animation
     let touchStartX = 0;
     let touchEndX = 0;
+    let currentIndex = 0;
 
     filmRoll.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
-    }, false);
+    }, { passive: true });
 
     filmRoll.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
-    }, false);
+    }, { passive: true });
 
     function handleSwipe() {
         const swipeThreshold = 50;
         const diff = touchEndX - touchStartX;
         
         if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
+            if (diff > 0 && currentIndex > 0) {
                 // Swipe right
-                filmRoll.scrollBy({
-                    left: -filmRoll.clientWidth,
-                    behavior: 'smooth'
-                });
-            } else {
+                currentIndex--;
+                scrollToImage(currentIndex);
+            } else if (diff < 0 && currentIndex < galleryData.length - 1) {
                 // Swipe left
-                filmRoll.scrollBy({
-                    left: filmRoll.clientWidth,
-                    behavior: 'smooth'
-                });
+                currentIndex++;
+                scrollToImage(currentIndex);
             }
         }
     }
 
     // Update progress on scroll
     filmRoll.addEventListener('scroll', () => {
-        updateProgress();
+        requestAnimationFrame(updateProgress);
     });
 
     // Initial progress update
